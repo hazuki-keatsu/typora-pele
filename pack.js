@@ -12,5 +12,7 @@ archive.pipe(output)
 archive
   .directory('dist', false)
   .file('src/manifest.json', { name: 'manifest.json' })
+  .file('LICENSE.md', { name: 'LICENSE.md' })
+  .file('node_modules/pele/LICENSE', { name: 'licenses/pele.txt' })
 
 archive.finalize()
