@@ -1,0 +1,8 @@
+{
+  "realtimeRendering": "实时渲染",
+  "realtimeRenderingDescription": "立即更新编辑和布局变化。关闭后使用 Typora 原有的延迟渲染，适合图表较多或较复杂的文档。",
+  "lightVariables": "亮色主题变量",
+  "darkVariables": "暗色主题变量",
+  "variablesDescription": "每行填写 --pele-* 变量声明，无需 .pele 选择器。自动保存并生效；留空使用默认配色。",
+  "unsupportedRenderer": "Pele 无法替换当前 Typora 的 mermaidAPI 属性。"
+}

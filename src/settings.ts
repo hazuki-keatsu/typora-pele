@@ -1,4 +1,5 @@
-import { PluginSettings, SettingTab } from '@typora-community-plugin/core'
+import { type I18n, PluginSettings, SettingTab } from '@typora-community-plugin/core'
+import type * as en from './locales/lang.en.json'
 
 export interface PeleSettings {
   realtimeRendering: boolean
@@ -9,24 +10,25 @@ export interface PeleSettings {
 export class PeleSettingTab extends SettingTab {
   get name() { return 'Pele' }
 
-  constructor(private settings: PluginSettings<PeleSettings>) {
+  constructor(private settings: PluginSettings<PeleSettings>, private i18n: I18n<typeof en>) {
     super()
   }
 
   onshow() {
     this.containerEl.replaceChildren()
+    const t = this.i18n.t
     this.addSetting(setting => {
-      setting.addName('实时渲染')
-      setting.addDescription('立即更新编辑和布局变化。关闭后使用 Typora 原有的延迟渲染，适合图表较多或较复杂的文档。')
+      setting.addName(t.realtimeRendering)
+      setting.addDescription(t.realtimeRenderingDescription)
       setting.addCheckbox({ settings: this.settings, bindingKey: 'realtimeRendering' })
     })
     for (const [key, name] of [
-      ['lightVariables', '亮色主题变量'],
-      ['darkVariables', '暗色主题变量'],
+      ['lightVariables', t.lightVariables],
+      ['darkVariables', t.darkVariables],
     ] as const) {
       this.addSetting(setting => {
         setting.addName(name)
-        setting.addDescription('每行填写 --pele-* 变量声明，无需 .pele 选择器。自动保存并生效；留空使用默认配色。')
+        setting.addDescription(t.variablesDescription)
         setting.containerEl.style.flexDirection = 'column'
         setting.containerEl.style.alignItems = 'stretch'
         setting.addTextArea(input => {

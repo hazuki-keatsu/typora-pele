@@ -6,11 +6,11 @@ interface MermaidAPI {
   render: Render
 }
 
-export function installRenderer(host: object, render: Render) {
+export function installRenderer(host: object, render: Render, unsupportedMessage: string) {
   const target = host as { mermaidAPI?: MermaidAPI }
   const descriptor = Object.getOwnPropertyDescriptor(target, 'mermaidAPI')
   if (descriptor && (!descriptor.configurable || descriptor.get || descriptor.set || !descriptor.writable)) {
-    throw new Error('Pele cannot replace this Typora mermaidAPI property')
+    throw new Error(unsupportedMessage)
   }
 
   let native = target.mermaidAPI
