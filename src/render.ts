@@ -1,7 +1,26 @@
 import { PeleError, render } from 'pele'
 import { typesetMath } from './math'
 
+const latestRenders = new WeakMap<HTMLElement, ReturnType<typeof renderDiagram>>()
+
 export async function renderMermaid(id: string, source: string, container?: HTMLElement) {
+  let pending = renderDiagram(id, source, container)
+  if (!container) return pending
+  latestRenders.set(container, pending)
+  // Typora commits every returned SVG; superseded calls must return the latest result too.
+  for (;;) {
+    try {
+      const result = await pending
+      if (latestRenders.get(container) === pending) return result
+    }
+    catch (error) {
+      if (latestRenders.get(container) === pending) throw error
+    }
+    pending = latestRenders.get(container)!
+  }
+}
+
+async function renderDiagram(id: string, source: string, container?: HTMLElement) {
   const element = container ?? document.querySelector<HTMLElement>('#write') ?? document.body
   const style = getComputedStyle(element)
   try {

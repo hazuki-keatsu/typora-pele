@@ -43,7 +43,10 @@ export async function typesetMath(formulas: Set<string>, size: number): Promise<
     activeCache.set(tex, pending)
     if (activeCache.size > CACHE_LIMIT) activeCache.delete(activeCache.keys().next().value!)
     const formula = await pending
-    if (!formula) continue
+    if (!formula) {
+      if (activeCache.get(tex) === pending) activeCache.delete(tex)
+      continue
+    }
     const element = formula.element.cloneNode(true) as SVGSVGElement
     const width = formula.width * size
     const height = formula.height * size
