@@ -8,8 +8,17 @@ interface MathJaxHost {
   }
 }
 
+type CachedMath = { element: SVGSVGElement; width: number; height: number }
+let cache = new Map<string, Promise<CachedMath | undefined>>()
+const CACHE_LIMIT = 256
+
+export function clearMathCache() {
+  cache = new Map()
+}
+
 export async function typesetMath(formulas: Set<string>, size: number): Promise<Map<string, MathMarkup>> {
   const result = new Map<string, MathMarkup>()
+  const activeCache = cache
   const host = window as unknown as MathJaxHost
   try {
     await host.MathJaxStartupPromise
@@ -19,16 +28,28 @@ export async function typesetMath(formulas: Set<string>, size: number): Promise<
   const mathJax = host.MathJax
   if (!mathJax?.tex2svgPromise) return result
   for (const tex of formulas) {
-    try {
-      const container = await mathJax.tex2svgPromise(tex, { display: false })
-      const svg = container.querySelector('svg')
-      if (!svg || svg.querySelector('[data-mjx-error]')) continue
-      const markup = standaloneMath(svg, size)
-      if (markup) result.set(tex, markup)
+    let pending = activeCache.get(tex)
+    if (!pending) {
+      pending = Promise.resolve().then(() => mathJax.tex2svgPromise!(tex, { display: false })).then(container => {
+        const element = container.querySelector('svg')
+        if (!element || element.querySelector('[data-mjx-error]')) return
+        // Cache at a unit font size; layout and font-size changes only scale this SVG.
+        const markup = standaloneMath(element, 1)
+        if (markup) return { element, width: markup.width, height: markup.height }
+      }).catch(() => undefined)
     }
-    catch {
-      // Invalid TeX falls back to Pele's plain-text label.
-    }
+    // Share in-flight work and keep recently used formulas without unbounded growth.
+    activeCache.delete(tex)
+    activeCache.set(tex, pending)
+    if (activeCache.size > CACHE_LIMIT) activeCache.delete(activeCache.keys().next().value!)
+    const formula = await pending
+    if (!formula) continue
+    const element = formula.element.cloneNode(true) as SVGSVGElement
+    const width = formula.width * size
+    const height = formula.height * size
+    element.setAttribute('width', String(width))
+    element.setAttribute('height', String(height))
+    result.set(tex, { svg: element.outerHTML, width, height })
   }
   return result
 }

@@ -2,6 +2,7 @@ import { type HtmlExportProcessor, Plugin, PluginSettings } from '@typora-commun
 import { editor } from 'typora'
 import { installRenderer, installRealtimeRendering, watchDiagramWidth } from './renderer'
 import { renderMermaid } from './render'
+import { clearMathCache } from './math'
 import { PeleSettings, PeleSettingTab } from './settings'
 import { applyCss, isDarkBackground, themeCss } from './styles'
 
@@ -37,6 +38,7 @@ export default class extends Plugin<PeleSettings> {
       cid => editor.getNode(cid)?.get('lang')?.toLowerCase().trim() === 'mermaid',
       () => settings.get('realtimeRendering'))
     this.register(() => {
+      clearMathCache()
       restoreTiming()
       restore()
       refresh()
