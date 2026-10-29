@@ -561,9 +561,9 @@ flowchart LR
   click A "https://mermaid.js.org/" "打开 Mermaid 官网"
 ```
 
-### 数学标签兼容性
+### LaTeX 数学标签
 
-当前插件没有向 Pele 提供数学公式排版器。此处用于观察默认降级显示，不要求生成排版后的公式。
+复用 Typora 内置 MathJax 排版。检查公式完整显示、节点尺寸足够、宽窄布局和亮暗主题切换后保持清晰；导出 HTML/PDF 后不应缺失字形。类成员和图表标题不属于 Pele 的数学标签排版范围。
 
 ```mermaid
 flowchart LR
@@ -601,3 +601,34 @@ flowchart LR
   A[前面的错误已隔离] --> B[其他图表正常渲染]
 ```
 
+
+## LaTeX 补充支持
+
+### 分式、根式、求和与矩阵
+
+```mermaid
+flowchart LR
+  A["$$\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$$"] --> B["$$\sum_{i=1}^{n} i=\frac{n(n+1)}{2}$$"]
+  B --> C["$$\begin{pmatrix}a&b\\c&d\end{pmatrix}$$"]
+```
+
+### 时序图中的公式
+
+```mermaid
+sequenceDiagram
+  participant A as Alice
+  participant B as Bob
+  A->>B: $$E=mc^2$$
+  B-->>A: $$\int_0^1 x^2\,dx=\frac{1}{3}$$
+```
+
+### 重复公式与错误公式降级
+
+相同公式应可在多个节点中独立显示。错误公式应显示源码而不导致整张图消失。
+
+```mermaid
+flowchart TB
+  A["$$x^2+y^2=z^2$$"] --> B["$$x^2+y^2=z^2$$"]
+  B --> C["$$\frac{1}{$$"]
+  C --> D[其他节点正常渲染]
+```
