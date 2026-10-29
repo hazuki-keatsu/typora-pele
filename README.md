@@ -22,16 +22,18 @@
 
 当前 manifest 声明的最低版本为 **Typora 1.6.7**、**插件核心 2.10.42**，目标平台为 Windows、Linux 和 macOS。*这不代表所有系统与版本组合都已完成验证，目前仅测试 `macOS 27 - Typora 1.14.15 (7789)`，如有问题，请开启 Issue。*
 
+### 插件市场安装
+
+1. 打开 [Typora Community Plugin](https://github.com/typora-community-plugin/typora-community-plugin) 全局设置（默认快捷键 `ctrl+.`）。
+2. 在「插件市场」中找到 Pele，然后安装。
+3. 在「已安装插件」中启用 Pele，然后重启 Typora。
+
 ### 手动安装
 
 1. 从 [Releases](https://github.com/hazuki-keatsu/typora-pele/releases) 下载 `plugin.zip`。
 2. 关闭 Typora，将压缩包解压到 `hazuki-keatsu.pele` 的文件夹，确保 `manifest.json` 和 `main.js` 位于该文件夹根目录。
 3. 将文件夹放入 Typora-community-plugin 的插件安装目录（详情见[官方文档](github.com/typora-community-plugin/typora-community-plugin/blob/main/docs/zh-cn/user-guide/2-plugin-installation.md)）。
 4. 重新打开 Typora，在社区插件设置的「已安装插件」中启用 **Pele**。
-
-### 插件市场安装
-
-目前插件还没有上架插件市场，上架后会支持下载。
 
 ### 从源码构建
 
