@@ -1,12 +1,12 @@
 {
-  "id": "hazuki-keatsu.pele",
-  "name": "Pele",
-  "description": "Render Mermaid diagrams with Pele.",
-  "author": "hazuki-keatsu",
-  "authorUrl": "https://github.com/hazuki-keatsu",
-  "repo": "hazuki-keatsu/typora-pele",
-  "version": "0.1.0",
-  "minAppVersion": "1.6.7",
-  "minCoreVersion": "2.10.42",
-  "platforms": ["win32", "linux", "darwin"]
+	"id": "hazuki-keatsu.pele",
+	"name": "Pele",
+	"description": "Render Mermaid diagrams with Pele.",
+	"author": "hazuki-keatsu",
+	"authorUrl": "https://github.com/hazuki-keatsu",
+	"repo": "hazuki-keatsu/typora-pele",
+	"version": "0.1.0",
+	"minAppVersion": "1.6.7",
+	"minCoreVersion": "2.10.42",
+	"platforms": ["win32", "linux", "darwin"]
 }

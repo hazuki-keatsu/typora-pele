@@ -1,8 +1,8 @@
 {
-  "realtimeRendering": "Real-time rendering",
-  "realtimeRenderingDescription": "Update edits and layout changes immediately. Turn this off to use Typora's rendering delay for documents with many or complex diagrams.",
-  "lightVariables": "Light theme variables",
-  "darkVariables": "Dark theme variables",
-  "variablesDescription": "Enter --pele-* variable declarations, one per line, without a .pele selector. Changes are saved and applied automatically. Leave empty to use the default colors.",
-  "unsupportedRenderer": "Pele cannot replace this Typora mermaidAPI property."
+	"realtimeRendering": "Real-time rendering",
+	"realtimeRenderingDescription": "Update edits and layout changes immediately. Turn this off to use Typora's rendering delay for documents with many or complex diagrams.",
+	"lightVariables": "Light theme variables",
+	"darkVariables": "Dark theme variables",
+	"variablesDescription": "Enter --pele-* variable declarations, one per line, without a .pele selector. Changes are saved and applied automatically. Leave empty to use the default colors.",
+	"unsupportedRenderer": "Pele cannot replace this Typora mermaidAPI property."
 }
